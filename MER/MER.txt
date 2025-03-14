@@ -1,0 +1,70 @@
+// Tabla 1: Tareas (Núcleo del sistema)
+Table Tareas {
+  id_tarea int [pk, increment]
+  titulo varchar
+  descripcion text
+  fecha_creacion datetime
+  fecha_limite datetime
+  completada boolean [default: false]
+}
+
+// Tabla 2: Categorías (Clasificación general de tareas)
+Table Categorías {
+  id_categoria int [pk, increment]
+  nombre varchar
+}
+
+// Tabla 3: Tareas_Categorías (Relación muchos-a-muchos)
+Table Tareas_Categorías {
+  id_tarea int [ref: > Tareas.id_tarea]
+  id_categoria int [ref: > Categorías.id_categoria]
+}
+
+// Tabla 4: Prioridades (Niveles de importancia)
+Table Prioridades {
+  id_prioridad int [pk, increment]
+  nombre varchar
+  valor int
+}
+
+// Tabla 5: Tareas_Prioridades (Asigna una prioridad por tarea)
+Table Tareas_Prioridades {
+  id_tarea int [pk, ref: > Tareas.id_tarea]
+  id_prioridad int [ref: > Prioridades.id_prioridad]
+}
+
+// Tabla 6: Recordatorios (Notificaciones puntuales)
+Table Recordatorios {
+  id_recordatorio int [pk, increment]
+  id_tarea int [ref: > Tareas.id_tarea]
+  mensaje varchar
+  fecha_programada datetime
+} 
+
+// Tabla 7: Subtareas (Pasos específicos de una tarea, reemplaza a Notas)
+Table Subtareas {
+  id_subtarea int [pk, increment]
+  id_tarea int [ref: > Tareas.id_tarea]
+  titulo varchar
+  completada boolean [default: false]
+}
+
+// Tabla 8: Etiquetas (Palabras clave para tareas)
+Table Etiquetas {
+  id_etiqueta int [pk, increment]
+  nombre varchar
+}
+
+// Tabla 9: Tareas_Etiquetas (Relación muchos-a-muchos)
+Table Tareas_Etiquetas {
+  id_tarea int [ref: > Tareas.id_tarea]
+  id_etiqueta int [ref: > Etiquetas.id_etiqueta]
+}
+
+// Tabla 10: Historial (Registro de eventos)
+Table Historial {
+  id_historial int [pk, increment]
+  id_tarea int [ref: > Tareas.id_tarea]
+  accion varchar
+  fecha datetime
+}
