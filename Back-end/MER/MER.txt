@@ -1,70 +1,59 @@
-// Tabla 1: Tareas (Núcleo del sistema)
-Table Tareas {
-  id_tarea int [pk, increment]
-  titulo varchar
-  descripcion text
-  fecha_creacion datetime
-  fecha_limite datetime
-  completada boolean [default: false]
+Table Tasks {
+  id_task int [pk, increment]
+  title varchar
+  description text
+  creation_date datetime
+  expiration_date datetime
+  active boolean [default: false]
 }
 
-// Tabla 2: Categorías (Clasificación general de tareas)
-Table Categorías {
-  id_categoria int [pk, increment]
-  nombre varchar
+Table Categories {
+  id_category int [pk, increment]
+  name varchar
 }
 
-// Tabla 3: Tareas_Categorías (Relación muchos-a-muchos)
-Table Tareas_Categorías {
-  id_tarea int [ref: > Tareas.id_tarea]
-  id_categoria int [ref: > Categorías.id_categoria]
+Table Tasks_Categories {
+  id_task int [ref: > Tasks.id_task]
+  id_category int [ref: > Categories.id_category]
 }
 
-// Tabla 4: Prioridades (Niveles de importancia)
-Table Prioridades {
-  id_prioridad int [pk, increment]
-  nombre varchar
-  valor int
+Table Priorities {
+  id_priority int [pk, increment]
+  name varchar
 }
 
-// Tabla 5: Tareas_Prioridades (Asigna una prioridad por tarea)
-Table Tareas_Prioridades {
-  id_tarea int [pk, ref: > Tareas.id_tarea]
-  id_prioridad int [ref: > Prioridades.id_prioridad]
+Table Tasks_Priorities {
+  id_task int [pk, ref: > Tasks.id_task]
+  id_priority int [ref: > Priorities.id_priority]
 }
 
-// Tabla 6: Recordatorios (Notificaciones puntuales)
-Table Recordatorios {
-  id_recordatorio int [pk, increment]
-  id_tarea int [ref: > Tareas.id_tarea]
-  mensaje varchar
-  fecha_programada datetime
+Table Reminders {
+  id_reminder int [pk, increment]
+  id_task int [ref: > Tasks.id_task]
+  message varchar
+  scheduled_date datetime
 } 
 
-// Tabla 7: Subtareas (Pasos específicos de una tarea, reemplaza a Notas)
-Table Subtareas {
-  id_subtarea int [pk, increment]
-  id_tarea int [ref: > Tareas.id_tarea]
-  titulo varchar
-  completada boolean [default: false]
+Table Subtasks {
+  id_subtask int [pk, increment]
+  id_task int [ref: > Tasks.id_task]
+  title varchar
+  completed boolean [default: false]
 }
 
-// Tabla 8: Etiquetas (Palabras clave para tareas)
-Table Etiquetas {
-  id_etiqueta int [pk, increment]
-  nombre varchar
+Table Tags {
+  id_tag int [pk, increment]
+  name varchar
 }
 
-// Tabla 9: Tareas_Etiquetas (Relación muchos-a-muchos)
-Table Tareas_Etiquetas {
-  id_tarea int [ref: > Tareas.id_tarea]
-  id_etiqueta int [ref: > Etiquetas.id_etiqueta]
+Table Tasks_Tags {
+  id_task int [ref: > Tasks.id_task]
+  id_tag int [ref: > Tags.id_tag]
 }
 
-// Tabla 10: Historial (Registro de eventos)
-Table Historial {
-  id_historial int [pk, increment]
-  id_tarea int [ref: > Tareas.id_tarea]
-  accion varchar
-  fecha datetime
+Table History {
+  id_history int [pk, increment]
+  id_task int [ref: > Tasks.id_task]
+  action varchar
+  date datetime
 }
