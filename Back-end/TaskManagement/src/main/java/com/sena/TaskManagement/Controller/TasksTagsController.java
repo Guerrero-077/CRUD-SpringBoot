@@ -1,8 +1,5 @@
 package com.sena.TaskManagement.Controller;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sena.TaskManagement.DTOs.RequestRegisterTasksTags;
+import com.sena.TaskManagement.DTOs.responseDto;
 import com.sena.TaskManagement.Service.TasksTagsServices;
-import com.sena.TaskManagement.model.TasksTags;
 
 @RestController
 @RequestMapping("api/v1/tasks-tags")
@@ -26,52 +23,45 @@ public class TasksTagsController {
     @Autowired
     private TasksTagsServices tasksTagsServices;
 
-    // ===============================
-    // Obtener todas las relaciones
-    // ===============================
-    @GetMapping("/")
-    public ResponseEntity<List<TasksTags>> findAll() {
-        var list = tasksTagsServices.findAllTaskTags();
-        return new ResponseEntity<>(list, HttpStatus.OK);
+    // Obtener todo
+    @GetMapping
+    public ResponseEntity<Object> findAll() {
+        var ListCategory = tasksTagsServices.findAllTaskTags();
+        return new ResponseEntity<Object>(ListCategory, HttpStatus.OK);
     }
 
-    // ===============================
-    // Obtener una por ID
-    // ===============================
+    // // Obtener por nombre
+    // @GetMapping("/filter/{name}")
+    // public ResponseEntity<Object> findByNameCategory(@PathVariable String name) {
+    // var ListCategory = tasksTagsServices.findByNameCategory(name);
+    // return new ResponseEntity<Object>(ListCategory, HttpStatus.OK);
+    // }
+
+    // Obtener por Id
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<TasksTags>> findById(@PathVariable int id) {
-        var result = tasksTagsServices.findByIdTaskTags(id);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+    public ResponseEntity<Object> findById(@PathVariable int id) {
+        var category = tasksTagsServices.findByIdTaskTags(id);
+        return new ResponseEntity<>(category, HttpStatus.OK);
     }
 
-    // ===============================
-    // Crear nueva relación
-    // ===============================
-    @PostMapping("/crear")
-    public ResponseEntity<TasksTags> create(@RequestBody RequestRegisterTasksTags request) {
-        TasksTags created = tasksTagsServices.create(request);
-        if (created != null) {
-            return new ResponseEntity<>(created, HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // Ej: si los IDs no existen
-        }
+    // Crear
+    @PostMapping
+    public ResponseEntity<responseDto> saveCategory(@RequestBody RequestRegisterTasksTags categoryDto) {
+        responseDto response = tasksTagsServices.save(categoryDto);
+        return new ResponseEntity<>(response, response.getStatus());
     }
 
-    // ===============================
-    // Actualizar relación
-    // ===============================
-    @PutMapping("/{id}")
-    public ResponseEntity<String> update(@PathVariable int id, @RequestBody RequestRegisterTasksTags request) {
-        tasksTagsServices.update(id, request);
-        return new ResponseEntity<>("Update ok", HttpStatus.OK);
+    // Actualizar
+    @PutMapping("/")
+    public ResponseEntity<responseDto> putMethodName(@RequestBody RequestRegisterTasksTags category) {
+        responseDto response = tasksTagsServices.update(category);
+        return new ResponseEntity<>(response, response.getStatus());
     }
 
-    // ===============================
-    // Eliminar relación
-    // ===============================
+    // Borrar
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable int id) {
-        tasksTagsServices.delete(id);
-        return new ResponseEntity<>("Delete ok", HttpStatus.OK);
+    public ResponseEntity<responseDto> deleteCategory(@PathVariable int id) {
+        responseDto response = tasksTagsServices.delete(id);
+        return new ResponseEntity<>(response, response.getStatus());
     }
 }

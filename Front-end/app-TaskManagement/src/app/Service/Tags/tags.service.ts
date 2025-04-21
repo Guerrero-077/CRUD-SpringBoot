@@ -12,9 +12,18 @@ export class TagsService {
   constructor() { }
 
   private http = inject(HttpClient);
-  private URLBase = environment.apiUrl + '/api/v1/tags/';
+  private URLBase = environment.apiUrl + '/api/v1/tags';
 
   getTags(): Observable<Tags[]> {
     return this.http.get<Tags[]>(this.URLBase);
   }
+
+  created(tags: { name: string }): Observable<Tags> {
+    return this.http.post<Tags>(this.URLBase, tags);
+  }
+
+  public delete(id: number) {
+    return this.http.delete(this.URLBase + '/' + id);
+  }
+
 }

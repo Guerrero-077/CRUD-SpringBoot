@@ -1,4 +1,8 @@
 export interface SubTasks {
     id: number;
-    title: string;
+    name: string;
+}
+
+export interface RequestRegisterSubTask {
+    name: string;
 }

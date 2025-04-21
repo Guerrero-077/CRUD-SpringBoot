@@ -11,7 +11,7 @@ export class SubTasksService {
 
   constructor() { }
   private http = inject(HttpClient);
-  private URLBase = environment.apiUrl + '/api/v1/subtasks/';
+  private URLBase = environment.apiUrl + '/api/v1/subtasks';
 
   public getSubTasks(): Observable<SubTasks[]> {
     return this.http.get<SubTasks[]>(this.URLBase);

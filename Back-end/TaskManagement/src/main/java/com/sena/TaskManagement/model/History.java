@@ -1,7 +1,6 @@
 package com.sena.TaskManagement.model;
 
 import java.time.LocalDate;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,7 +33,6 @@ public class History {
 
     @ManyToOne
     @JoinColumn(name = "task_id")
-    @JsonIgnoreProperties("history")
     private Tasks taskForHistory;
 
     // ===========================
@@ -71,14 +69,6 @@ public class History {
         this.history_action = history_action;
     }
 
-    public Tasks getTaskForHistory() {
-        return taskForHistory;
-    }
-
-    public void setTaskForHistory(Tasks taskForHistory) {
-        this.taskForHistory = taskForHistory;
-    }
-
     public LocalDate getHistory_date() {
         return history_date;
     }
@@ -87,4 +77,11 @@ public class History {
         this.history_date = history_date;
     }
 
+    public Tasks getTaskForHistory() {
+        return taskForHistory;
+    }
+
+    public void setTaskForHistory(Tasks taskForHistory) {
+        this.taskForHistory = taskForHistory;
+    }
 }

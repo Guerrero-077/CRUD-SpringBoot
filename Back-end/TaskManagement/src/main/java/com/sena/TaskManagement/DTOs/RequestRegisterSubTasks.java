@@ -10,7 +10,7 @@ public class RequestRegisterSubTasks {
     // = Attributes =
     // ===================
     private int id;
-    private String title;
+    private String name;
     private int task_id;
 
     // ===========================
@@ -19,9 +19,9 @@ public class RequestRegisterSubTasks {
     public RequestRegisterSubTasks() {
     }
 
-    public RequestRegisterSubTasks(int id, String title, int task_id) {
+    public RequestRegisterSubTasks(int id, String name, int task_id) {
         this.id = id;
-        this.title = title;
+        this.name = name;
         this.task_id = task_id;
     }
 
@@ -37,20 +37,20 @@ public class RequestRegisterSubTasks {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public int getTask_id() {
         return task_id;
     }
 
     public void setTask_id(int task_id) {
         this.task_id = task_id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

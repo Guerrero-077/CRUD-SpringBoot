@@ -23,6 +23,20 @@ public class TasksCategories {
     private int id;
 
     // ===========================
+    // = Relaciones =
+    // ===========================
+
+    @ManyToOne
+    @JoinColumn(name = "task_id")
+    @JsonIgnoreProperties("tasksCategories")
+    private Tasks tasks;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    @JsonIgnoreProperties("tasks")
+    private Categories categories;
+
+    // ===========================
     // Constructors =
     // ===========================
 
@@ -38,6 +52,11 @@ public class TasksCategories {
     // ==========================
     // = Getters and Setters =
     // ==========================
+
+    public TasksCategories(Tasks tasks, Categories categories) {
+        this.tasks = tasks;
+        this.categories = categories;
+    }
 
     public int getId() {
         return id;
@@ -62,19 +81,4 @@ public class TasksCategories {
     public void setCategories(Categories categories) {
         this.categories = categories;
     }
-
-    // ===================
-    // = Relaciones =
-    // ===================
-
-    @ManyToOne
-    @JoinColumn(name = "task_id")
-    @JsonIgnoreProperties("tasksCategories")
-    private Tasks tasks;
-
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    @JsonIgnoreProperties("tasks")
-    private Categories categories;
-
 }

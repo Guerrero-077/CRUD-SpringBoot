@@ -1,62 +1,80 @@
 package com.sena.TaskManagement.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.sena.TaskManagement.DTOs.RequestRegisterTask;
+import com.sena.TaskManagement.DTOs.Registrar;
+import com.sena.TaskManagement.DTOs.TaskWithDetails;
+import com.sena.TaskManagement.DTOs.responseDto;
 import com.sena.TaskManagement.Service.TasksServices;
-import com.sena.TaskManagement.model.Tasks;
 
 @RestController
-@RequestMapping("api/v1/tasks")
+@RequestMapping("/api/v1/tasks")
 public class TasksController {
 
     @Autowired
     private TasksServices tasksServices;
 
-    @GetMapping("/")
-    public ResponseEntity<Object> findAll() {
-        var listTasks = tasksServices.findAllTasks();
-        return new ResponseEntity<>(listTasks, HttpStatus.OK);
+    @GetMapping("/with-details")
+    public List<TaskWithDetails> getTasksWithDetails() {
+        return tasksServices.getTasksWithDetails();
     }
 
+    @GetMapping("/filter/{id}")
+    public List<TaskWithDetails> getFilter(@PathVariable int id) {
+        return tasksServices.getFilter(id);
+    }
+
+    // Obtener todo
+    @GetMapping
+    public ResponseEntity<Object> findAllCategory() {
+        var ListCategory = tasksServices.findAll();
+        return new ResponseEntity<Object>(ListCategory, HttpStatus.OK);
+    }
+
+    // // Obtener por nombre
+    // @GetMapping("/filter/{name}")
+    // public ResponseEntity<Object> findByNameCategory(@PathVariable String name) {
+    // var ListCategory = tasksServices.findByNameCategory(name);
+    // return new ResponseEntity<Object>(ListCategory, HttpStatus.OK);
+    // }
+
+    // Obtener por Id
     @GetMapping("/{id}")
-    public ResponseEntity<Object> findById(@PathVariable int id) {
-        var task = tasksServices.findTaskById(id);
-        return new ResponseEntity<>(task, HttpStatus.OK);
+    public ResponseEntity<Object> findByIdCategory(@PathVariable int id) {
+        var category = tasksServices.findById(id);
+        return new ResponseEntity<>(category, HttpStatus.OK);
     }
 
-    @PostMapping("/crear")
-    public ResponseEntity<Tasks> createTask(@RequestBody RequestRegisterTask request) {
-        Tasks newTask = tasksServices.createTask(request);
-        return new ResponseEntity<>(newTask, HttpStatus.CREATED);
+    // Crear
+    @PostMapping
+    public ResponseEntity<responseDto> saveCategory(@RequestBody Registrar categoryDto) {
+        responseDto response = tasksServices.save(categoryDto);
+        return new ResponseEntity<>(response, response.getStatus());
     }
 
+    // Actualizar
     @PutMapping("/{id}")
-    public String update(@PathVariable int id, @RequestBody Tasks task) {
-        tasksServices.updateTask(id, task);
-        return "Update ok";
+    public ResponseEntity<responseDto> putMethodName(@PathVariable int id, @RequestBody Registrar category) {
+        responseDto response = tasksServices.update(id, category);
+        return new ResponseEntity<>(response, response.getStatus());
     }
 
+    @PutMapping("/toggle-active/{id}")
+    public ResponseEntity<responseDto> toggleActive(@PathVariable int id, @RequestParam boolean active) {
+        responseDto response = tasksServices.toggleActive(id, active);
+        return new ResponseEntity<>(response, response.getStatus());
+    }
+
+    // Borrar
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable int id) {
-        tasksServices.deleteTask(id);
-        return "Delete ok";
-    }
-
-    @GetMapping("/filter/{title}")
-    public ResponseEntity<Object> filterForTitle(@PathVariable String title) {
-        var listTasks = tasksServices.searchTasksByTitle(title);
-        return new ResponseEntity<>(listTasks, HttpStatus.OK);
+    public ResponseEntity<responseDto> deleteCategory(@PathVariable int id) {
+        responseDto response = tasksServices.delete(id);
+        return new ResponseEntity<>(response, response.getStatus());
     }
 
 }

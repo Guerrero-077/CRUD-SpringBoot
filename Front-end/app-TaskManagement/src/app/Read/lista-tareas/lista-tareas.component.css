@@ -1,0 +1,169 @@
+/* Estilos generales */
+.container {
+    width: 100%;
+    overflow-x: auto;
+    padding: 0 15px;
+}
+
+.table-responsive {
+    min-width: 600px;
+    /* Ancho mínimo antes de aplicar scroll */
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    /* Mejor scroll en iOS */
+}
+
+.tasks-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Estilos para celdas */
+.task-name {
+    font-weight: 500;
+    color: #333;
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.task-description {
+    max-width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #666;
+}
+
+.task-date {
+    font-size: 0.85rem;
+    color: #666;
+    white-space: nowrap;
+}
+
+/* Botones */
+.btn {
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    border: none;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.btn-primary {
+    background-color: #4a6cf7;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #3a5ce5;
+}
+
+.btn-secondary {
+    background-color: #e1e8ff;
+    color: #4a6cf7;
+}
+
+.btn-secondary:hover {
+    background-color: #d0dbff;
+}
+
+.btn-danger {
+    background-color: #ffe7e7;
+    color: #ff7875;
+}
+
+.btn-danger:hover {
+    background-color: #ffd6d6;
+}
+
+/* Badges */
+.priority-badge,
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    color: white;
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.priority-high {
+    background-color: #ff4d4f;
+}
+
+.priority-medium {
+    background-color: #faad14;
+}
+
+.priority-low {
+    background-color: #52c41a;
+}
+
+.status-completed {
+    background-color: #52c41a;
+}
+
+.status-pending {
+    background-color: #faad14;
+}
+
+.status-cancelled {
+    background-color: #ff4d4f;
+}
+
+/* Acciones */
+.actions {
+    display: flex;
+    gap: 8px;
+    padding: 5px;
+}
+
+/* Media queries para dispositivos móviles */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 8px;
+    }
+
+    .btn {
+        padding: 6px 10px;
+        font-size: 0.75rem;
+    }
+
+    .task-name,
+    .task-description {
+        max-width: 150px;
+    }
+
+    .priority-badge,
+    .status-badge {
+        font-size: 0.65rem;
+        padding: 3px 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    .actions {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 6px;
+    }
+
+    .task-name,
+    .task-description {
+        max-width: 120px;
+    }
+
+    mat-cell,
+    mat-header-cell {
+        padding: 8px 4px !important;
+    }
+}

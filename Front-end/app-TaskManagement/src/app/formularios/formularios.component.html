@@ -1,0 +1,13 @@
+<h2>{{name}}</h2>
+
+<form (submit)="guardarCategories()" [formGroup]="form">
+    <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input [formControl]="form.controls.name" matInput />
+    </mat-form-field>
+
+    <div>
+        <button type="submit" mat-flat-button>Guardar</button>
+        <a mat-stroked-button routerLink="/categories">Cancelar</a>
+    </div>
+</form>

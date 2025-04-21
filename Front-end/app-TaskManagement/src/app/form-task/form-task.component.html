@@ -1,0 +1,168 @@
+<div class="detail-header" id="form-name">{{name}}</div>
+
+<div id="task-detail-1" class="task-detail">
+    <form (submit)="guardar()" [formGroup]="form">
+        <div class="detail-section">
+            <div class="info-box">
+                <div>
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput placeholder="Nombre" [formControl]="form.controls.name" required>
+                    </mat-form-field>
+
+                    <div *ngIf="form.controls.name.invalid && form.controls.name.touched" class="error-message">
+                        El título es requerido.
+                    </div>
+                </div>
+
+                <div>
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Descripción</mat-label>
+                        <input matInput placeholder="Descripción" [formControl]="form.controls.description" required>
+                    </mat-form-field>
+
+                    <div *ngIf="form.controls.description.invalid && form.controls.description.touched"
+                        class="error-message">
+                        La descripción es requerida.
+                    </div>
+                </div>
+
+                <div class="info-field">
+                    <div class="info-label">Fecha de creación:</div>
+                    <div id="creation-date">{{ form.get('creation_date')?.value | date:'yyyy-MM-dd' }}</div>
+                </div>
+
+                <div>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Fecha límite</mat-label>
+                        <input matInput [matDatepicker]="picker" [formControl]="form.controls.expirationDate" required>
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+
+                    <div *ngIf="form.controls.expirationDate.invalid && form.controls.expirationDate.touched"
+                        class="error-message">
+                        La fecha límite es requerida.
+                    </div>
+                </div>
+
+                <div>
+                    <mat-form-field>
+                        <mat-label>Prioridad</mat-label>
+                        <mat-select [formControl]="form.controls.priorityId" required>
+                            <mat-option *ngFor="let prioritie of priorities" [value]="prioritie.id">
+                                {{ prioritie.name }}
+                            </mat-option>
+                        </mat-select>
+
+                        <mat-error *ngIf="form.controls.priorityId.invalid && form.controls.priorityId.touched">
+                            Debes seleccionar una prioridad.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div>
+                    <mat-form-field>
+                        <mat-label>Estado de la tarea</mat-label>
+                        <mat-select [formControl]="form.controls.taskStatusId" required>
+                            <mat-option *ngFor="let taskStatus of taskStatus" [value]="taskStatus.id">
+                                {{ taskStatus.name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+            </div>
+
+            <div class="detail-section" [formGroup]="form">
+                <div class="section-name">
+                    <span>Subtareas:</span>
+                    <button class="btn btn-primary" mat-button type="button" (click)="addSubTask()">+ Añadir
+                        Subtarea</button>
+                </div>
+
+                <div formArrayName="subTasks" class="subtasks" id="subtasks-container">
+                    <div *ngFor="let subTask of subTasksFormArray.controls; let i = index" [formGroupName]="i"
+                        class="subtask-item">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Título de la subtarea</mat-label>
+                            <input matInput placeholder="Título de la subtarea" formControlName="name">
+                            <mat-error *ngIf="subTask.get('name')?.invalid && subTask.get('name')?.touched">
+                                El título de la subtarea es requerido.
+                            </mat-error>
+                        </mat-form-field>
+
+                        <button mat-icon-button color="warn" type="button" (click)="removeSubTask(i)"
+                            aria-label="Eliminar subtarea">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-section" [formGroup]="form">
+                <div class="section-name">
+                    <span>Recordatorios:</span>
+                    <button class="btn btn-primary" mat-button type="button" (click)="addReminder()">+ Añadir
+                        Recordatorio</button>
+                </div>
+
+                <div formArrayName="reminders" class="reminders" id="reminders-container">
+                    <div *ngFor="let reminder of remindersFormArray.controls; let i = index" [formGroupName]="i"
+                        class="reminders-item">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Título del recordatorio</mat-label>
+                            <input matInput placeholder="Título del recordatorio" formControlName="name">
+                            <mat-error *ngIf="reminder.get('name')?.invalid && reminder.get('name')?.touched">
+                                El título del recordatorio es requerido.
+                            </mat-error>
+                        </mat-form-field>
+
+                        <button mat-icon-button color="warn" type="button" (click)="removeReminders(i)"
+                            aria-label="Eliminar recordatorio">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <div class="tag-container">
+                    <div class="tag-group">
+                        <div class="section-name">Categorías:</div>
+                        <ul style="list-style: none; padding: 0; margin: 0;">
+                            <ng-container *ngFor="let categorie of categories; let i = index">
+                                <li class="example-list-item">
+                                    <mat-checkbox [checked]="form.controls['categoryIds'].value.includes(categorie.id)"
+                                        (change)="onCategoryChange($event, categorie.id)">
+                                        {{categorie.name}}
+                                    </mat-checkbox>
+                                </li>
+                            </ng-container>
+                        </ul>
+                    </div>
+
+                    <div class="tag-group">
+                        <div class="section-name">Etiquetas:</div>
+                        <ul style="list-style: none; padding: 0; margin: 0;">
+                            <ng-container *ngFor="let tag of tags; let i = index">
+                                <li class="example-list-item">
+                                    <mat-checkbox (change)="onTagChange($event, tag.id)"
+                                        [checked]="form.get('tagIds')?.value?.includes(tag.id)">
+                                        {{tag.name}}
+                                    </mat-checkbox>
+                                </li>
+                            </ng-container>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-primary" type="submit" mat-flat-button>Guardar</button>
+                    <a class="btn btn-secondary" mat-stroked-button routerLink="/">Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

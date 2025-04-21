@@ -1,18 +1,26 @@
-import { TaskPriority } from "./taskPriorities";
+import { Priorities, RequestRegisterPriorities } from './priorities.models';
+import { RequestRegisterReminders } from './reminders.models';
+import { RequestRegisterSubTask } from './subTasks.models';
+
 
 export interface taskCreacion {
-    title: string;
+    name: string;
     description: string;
+    active: boolean;
     expiration_date: string;
-    tasksTags: TaskPriority[];
+    subTasks: RequestRegisterSubTask[];
+    reminders: RequestRegisterReminders[];
+    priorities: RequestRegisterPriorities[];
 }
 
 
 export interface task {
     id: number;
-    title: string;
+    name: string;
     description: string;
     creation_date: string;
     expiration_date: string;
-    tasksTags: TaskPriority[];
+    Priorities: Priorities[];
+    subtaskName: string[];
+
 }

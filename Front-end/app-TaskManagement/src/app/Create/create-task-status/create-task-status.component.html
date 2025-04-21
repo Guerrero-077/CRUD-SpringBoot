@@ -1,0 +1,10 @@
+<form (submit)="guardarCambios()" [formGroup]="form">
+    <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input [formControl]="form.controls.name" matInput />
+    </mat-form-field>
+    <div class="">
+        <button type="submit" mat-flat-button>Guardar</button>
+        <a mat-stroked-button routerLink="/taskStatus">Cancelar</a>
+    </div>
+</form>

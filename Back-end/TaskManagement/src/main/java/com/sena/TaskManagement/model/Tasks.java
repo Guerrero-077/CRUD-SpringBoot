@@ -5,9 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -30,8 +29,8 @@ public class Tasks {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "title")
-    private String title;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "description")
     private String description;
@@ -56,44 +55,38 @@ public class Tasks {
     // ===================
 
     // subTasks
-    @OneToMany(mappedBy = "tasksForSubTasks")
-    @JsonIgnoreProperties("tasksForSubTasks")
-    private List<SubTasks> subTasks;
+    @OneToMany(mappedBy = "tasksForSubTasks", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SubTasks> subTasks = new ArrayList<>();
 
     // history
-    @OneToMany(mappedBy = "taskForHistory")
-    @JsonIgnoreProperties("taskForHistory")
+    @OneToMany(mappedBy = "taskForHistory", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<History> history = new ArrayList<>();
 
     // tasksCategories
-    @OneToMany(mappedBy = "tasks")
-    @JsonIgnoreProperties("tasks")
+    @OneToMany(mappedBy = "tasks", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TasksCategories> tasksCategories = new ArrayList<>();
 
     // tasksTags
-    @OneToMany(mappedBy = "tasks")
-    @JsonIgnoreProperties("tasks")
+    @OneToMany(mappedBy = "tasks", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TasksTags> tasksTags = new ArrayList<>();
 
     // Reminders
-    @OneToMany(mappedBy = "tasksForReminders")
-    @JsonManagedReference
+    @OneToMany(mappedBy = "tasksForReminders", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reminders> reminders = new ArrayList<>();
 
     // ===================
-    // = muchos a Uno =
+    // = Muchos a Uno =
     // ===================
 
     // taskStatus
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_status", nullable = false)
+    @JoinColumn(name = "id_status")
     private TaskStatus taskStatus; // Relación muchos a uno con TaskStatus
 
     // taskPriority
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_priority", nullable = false)
+    @JoinColumn(name = "id_priority")
     private Priorities priority; // Relación muchos a uno con Priority
-    
 
     // ===========================
     // Constructors =
@@ -102,11 +95,11 @@ public class Tasks {
     public Tasks() {
     }
 
-    public Tasks(int id, String title, String description, LocalDate creation_date, LocalDate expiration_date,
+    public Tasks(int id, String name, String description, LocalDate creation_date, LocalDate expiration_date,
             boolean active, List<SubTasks> subTasks, List<History> history, List<TasksCategories> tasksCategories,
-            List<TasksTags> tasksTags, List<Reminders> reminders) {
+            List<TasksTags> tasksTags, List<Reminders> reminders, TaskStatus taskStatus, Priorities priority) {
         this.id = id;
-        this.title = title;
+        this.name = name;
         this.description = description;
         this.creation_date = creation_date;
         this.expiration_date = expiration_date;
@@ -116,25 +109,19 @@ public class Tasks {
         this.tasksCategories = tasksCategories;
         this.tasksTags = tasksTags;
         this.reminders = reminders;
+        this.taskStatus = taskStatus;
+        this.priority = priority;
     }
+
     // ==========================
     // = Getters and Setters =
     // ==========================
-
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getDescription() {
@@ -207,6 +194,30 @@ public class Tasks {
 
     public void setReminders(List<Reminders> reminders) {
         this.reminders = reminders;
+    }
+
+    public TaskStatus getTaskStatus() {
+        return taskStatus;
+    }
+
+    public void setTaskStatus(TaskStatus taskStatus) {
+        this.taskStatus = taskStatus;
+    }
+
+    public Priorities getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Priorities priority) {
+        this.priority = priority;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

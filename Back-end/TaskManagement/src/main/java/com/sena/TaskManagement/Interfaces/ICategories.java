@@ -12,6 +12,7 @@ public interface ICategories extends JpaRepository<Categories, Integer> {
      * DELETE
      * por defecto
      */
+    boolean existsByName(String name);
 
     // @Query("SELECT t FROM Tasks t WHERE t.title LIKE %?1%")
     // List<Tasks> findByTitle(String title);

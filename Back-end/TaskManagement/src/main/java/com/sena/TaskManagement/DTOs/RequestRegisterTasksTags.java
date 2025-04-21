@@ -27,6 +27,7 @@ public class RequestRegisterTasksTags {
         this.taskId = taskId;
         this.tagsId = tagsId;
     }
+
     // ==========================
     // = Getters and Setters =
     // ==========================

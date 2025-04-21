@@ -1,56 +1,71 @@
 package com.sena.TaskManagement.DTOs;
 
 import java.time.LocalDate;
-import java.util.List;
-
 
 public class RequestRegisterTask {
-
-    /*
-     * Agregar al DTO solo los elementos a exponer según
-     * la petición o respuesta
-     */
 
     // ===================
     // = Attributes =
     // ===================
 
-    private String title;
+    private int id;
+    private String name;
     private String description;
+    private LocalDate creationDate;
     private LocalDate expirationDate;
-    private boolean active = true;
-    private List<Integer> categoryIds;
-    private List<Integer> tagIds;
-    private List<Integer> priorityIds;
+    private boolean active;
+    private Integer priorityId;
+    private Integer taskStatusId;
 
     // ===========================
-    // Constructors =
+    // = Constructors =
     // ===========================
 
     public RequestRegisterTask() {
     }
 
-    public RequestRegisterTask(String title, String description, LocalDate expirationDate, boolean active,
-            List<Integer> categoryIds, List<Integer> tagIds, List<Integer> priorityIds) {
-        this.title = title;
+    public RequestRegisterTask(int id, String name, String description, LocalDate creationDate,
+            LocalDate expirationDate, boolean active, Integer priorityId, Integer taskStatusId) {
+        this.id = id;
+        this.name = name;
         this.description = description;
+        this.creationDate = creationDate;
         this.expirationDate = expirationDate;
         this.active = active;
-        this.categoryIds = categoryIds;
-        this.tagIds = tagIds;
-        this.priorityIds = priorityIds;
+        this.priorityId = priorityId;
+        this.taskStatusId = taskStatusId;
     }
 
     // ==========================
     // = Getters and Setters =
     // ==========================
 
-    public String getTitle() {
-        return title;
+    public int getId() {
+        return id;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPriorityId(Integer priorityId) {
+        this.priorityId = priorityId;
+    }
+
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
     }
 
     public String getDescription() {
@@ -77,28 +92,30 @@ public class RequestRegisterTask {
         this.active = active;
     }
 
-    public List<Integer> getCategoryIds() {
-        return categoryIds;
+    public int getPriorityId() {
+        return priorityId;
     }
 
-    public void setCategoryIds(List<Integer> categoryIds) {
-        this.categoryIds = categoryIds;
+    public void setPriorityId(int priorityId) {
+        this.priorityId = priorityId;
     }
 
-    public List<Integer> getTagIds() {
-        return tagIds;
+    public Integer getTaskStatusId() {
+        return taskStatusId;
     }
 
-    public void setTagIds(List<Integer> tagIds) {
-        this.tagIds = tagIds;
+    public void setTaskStatusId(Integer taskStatusId) {
+        this.taskStatusId = taskStatusId;
     }
 
-    public List<Integer> getPriorityIds() {
-        return priorityIds;
-    }
+    // ==========================
+    // = Validation Helpers =
+    // ==========================
 
-    public void setPriorityIds(List<Integer> priorityIds) {
-        this.priorityIds = priorityIds;
+    // Puedes agregar aquí algún método adicional para validar la fecha de
+    // expiración y otras reglas de negocio
+    public boolean isExpirationDateValid() {
+        return expirationDate != null && !expirationDate.isBefore(LocalDate.now());
     }
 
 }

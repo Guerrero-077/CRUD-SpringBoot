@@ -2,6 +2,7 @@ package com.sena.TaskManagement.model;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,10 +28,9 @@ public class Priorities {
     // ===================
     // = Relaciones =
     // ===================
-
-    @OneToMany(mappedBy = "priority")
-    private List<Tasks> tasks; // Relación uno a muchos con Task
-
+    @OneToMany(mappedBy = "priority", cascade = CascadeType.ALL, orphanRemoval = true)
+    // @JsonManagedReference
+    private List<Tasks> tasks;
     // ===========================
     // Constructors =
     // ===========================

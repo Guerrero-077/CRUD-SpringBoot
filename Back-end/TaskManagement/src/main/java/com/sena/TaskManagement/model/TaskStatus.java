@@ -3,6 +3,7 @@ package com.sena.TaskManagement.model;
 import jakarta.persistence.*;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity(name = "TaskStatus")
 public class TaskStatus {
@@ -16,14 +17,15 @@ public class TaskStatus {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "name", nullable = false, unique = true, length = 50)
+    @Column(name = "name")
     private String name;
 
     // ===================
     // = Relaciones =
     // ===================
 
-    @OneToMany(mappedBy = "taskStatus", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "taskStatus", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Tasks> tasks;
 
     // ===========================

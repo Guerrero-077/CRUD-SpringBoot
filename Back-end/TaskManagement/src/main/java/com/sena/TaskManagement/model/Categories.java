@@ -3,8 +3,6 @@ package com.sena.TaskManagement.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,6 +23,13 @@ public class Categories {
 
     @Column(name = "name")
     private String name;
+
+    // ===================
+    // = Relaciones =
+    // ===================
+
+    @OneToMany(mappedBy = "categories")
+    private List<TasksCategories> tasks = new ArrayList<>();
 
     // ===========================
     // Constructors =
@@ -59,12 +64,11 @@ public class Categories {
         this.name = name;
     }
 
-    // ===================
-    // = Relaciones =
-    // ===================
+    public List<TasksCategories> getTasks() {
+        return tasks;
+    }
 
-    @OneToMany(mappedBy = "categories")
-    @JsonIgnoreProperties("categories")
-    private List<TasksCategories> tasks = new ArrayList<>();
-
+    public void setTasks(List<TasksCategories> tasks) {
+        this.tasks = tasks;
+    }
 }

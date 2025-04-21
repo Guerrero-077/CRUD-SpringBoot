@@ -5,7 +5,7 @@ public class RequestRegisterReminders {
     // = Attributes =
     // ===================
     private int id;
-    private String title;
+    private String name;
     private int task_id;
 
     // ===========================
@@ -15,15 +15,15 @@ public class RequestRegisterReminders {
     public RequestRegisterReminders() {
     }
 
-    public RequestRegisterReminders(int id, String title, int task_id) {
-        this.id = id;
-        this.title = title;
-        this.task_id = task_id;
-    }
-
     // ==========================
     // = Getters and Setters =
     // ==========================
+
+    public RequestRegisterReminders(int id, String name, int task_id) {
+        this.id = id;
+        this.name = name;
+        this.task_id = task_id;
+    }
 
     public int getId() {
         return id;
@@ -33,20 +33,20 @@ public class RequestRegisterReminders {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public int getTask_id() {
         return task_id;
     }
 
     public void setTask_id(int task_id) {
         this.task_id = task_id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

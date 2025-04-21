@@ -42,6 +42,13 @@ public class TasksTags {
 
     public TasksTags() {
     }
+    
+
+    public TasksTags(Tasks tasks, Tags tags) {
+        this.tasks = tasks;
+        this.tags = tags;
+    }
+
 
     public TasksTags(int id, Tasks tasks, Tags tags) {
         this.id = id;
