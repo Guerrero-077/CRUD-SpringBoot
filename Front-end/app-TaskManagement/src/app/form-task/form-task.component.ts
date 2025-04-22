@@ -20,21 +20,20 @@ import { TaskStatusService } from '../Service/TasksStatus/task-status.service';
 import { task, taskCreacion } from '../models/task.models';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
+import {ChangeDetectionStrategy} from '@angular/core';
 
 @Component({
   selector: 'app-form-task',
   providers: [provideNativeDateAdapter()],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
     MatButtonModule,
     RouterLink,
     MatSelectModule,
     FormsModule,
     MatCheckboxModule,
-    MatDatepickerModule,
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,

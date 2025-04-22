@@ -4,9 +4,6 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.scheduling.config.Task;
-
 import com.sena.TaskManagement.DTOs.TaskWithDetails;
 import com.sena.TaskManagement.model.Tasks;
 

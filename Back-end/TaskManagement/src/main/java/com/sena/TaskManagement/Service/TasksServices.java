@@ -82,10 +82,6 @@ public class TasksServices {
         }
     }
 
-    // Obtener por nombre
-    // public List<Tasks> findByNamebook(String name) {
-    // return tasksData.findByName(name);
-    // }
 
     //Obterner por prioeidad
     public List<TaskWithDetails> getFilter(int id){
@@ -170,7 +166,7 @@ public class TasksServices {
         remindersRepository.saveAll(tareasReminders);
     }
 
-    // Actualizar categoria
+    // Actualizar
     public responseDto update(int id, Registrar dto) {
         try {
             if (id <= 0) {
